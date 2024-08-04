@@ -41,5 +41,8 @@ func on_timer_timeout():
 	# we will add child node to the scene where player node is (i.e. main)
 	player.get_parent().add_child(sword_instance)
 	sword_instance.global_position = enemies[0].global_position
+	sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4
 	
-	
+	# will angle the sword toward the enemy
+	var enemy_direction = enemies[0].global_position - sword_instance.global_position
+	sword_instance.rotation = enemy_direction.angle()
