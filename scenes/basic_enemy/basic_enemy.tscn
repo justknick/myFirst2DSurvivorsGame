@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://dpfcq0vlqgavu"]
 
 [ext_resource type="Script" path="res://scenes/basic_enemy/basic_enemy.gd" id="1_ydhnh"]
 [ext_resource type="Texture2D" uid="uid://138ki7nr65ho" path="res://scenes/basic_enemy/basic_enemy.png" id="2_mcspf"]
@@ -10,7 +10,9 @@ radius = 12.0
 radius = 6.0
 
 [node name="BasicEnemy" type="CharacterBody2D" groups=["enemy"]]
-collision_layer = 0
+collision_layer = 8
+collision_mask = 9
+motion_mode = 1
 script = ExtResource("1_ydhnh")
 
 [node name="Area2D" type="Area2D" parent="."]
