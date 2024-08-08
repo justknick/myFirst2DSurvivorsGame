@@ -6,6 +6,7 @@ const MAX_RANGE = 150
 # Specify scene that corresponds to sword ability 
 # Tells the type of variable that's being exported in the inspector
 @export var sword_ability: PackedScene
+var damage = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,9 +38,11 @@ func on_timer_timeout():
 	
 	# the var will instantiate the ability, but not display anything
 	# placed after player instance, bc we want to ensure player exists 
-	var sword_instance = sword_ability.instantiate() as Node2D
+	var sword_instance = sword_ability.instantiate() as SwordAbiliy
 	# we will add child node to the scene where player node is (i.e. main)
 	player.get_parent().add_child(sword_instance)
+	sword_instance.hitbox_component.damage = damage
+	
 	sword_instance.global_position = enemies[0].global_position
 	sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4
 	
