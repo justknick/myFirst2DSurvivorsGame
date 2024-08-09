@@ -44,7 +44,9 @@ func on_timer_timeout():
 	# placed after player instance, bc we want to ensure player exists 
 	var sword_instance = sword_ability.instantiate() as SwordAbiliy
 	# we will add child node to the scene where player node is (i.e. main)
-	player.get_parent().add_child(sword_instance)
+	# we will add sword to the foreground_layer
+	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer")
+	foreground_layer.add_child(sword_instance)
 	sword_instance.hitbox_component.damage = damage
 	
 	sword_instance.global_position = enemies[0].global_position

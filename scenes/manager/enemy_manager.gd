@@ -27,7 +27,8 @@ func on_timer_timeout():
 	
 	# declare enemy to instantiate - this creates node, but doesn't put in scene tree
 	var enemy = basic_enemy_scene.instantiate() as Node2D
-	# now we'll place enemy node into scene tree 
-	get_parent().add_child(enemy)
-	enemy.global_position = spawn_position 
 	
+	# now we'll place enemy node into scene tree, under entities layer
+	var entities_layer = get_tree().get_first_node_in_group("entities_layer")
+	entities_layer.add_child(enemy)
+	enemy.global_position = spawn_position 
