@@ -22,6 +22,7 @@ func on_level_up(current_level: int):
 	upgrade_screen_instance.upgrade_selected.connect(on_upgrade_selected)
 
 
+# keep track of upgrades and have refeerence to upgraddes
 func apply_upgrade(upgrade: AbilityUpgrade):
 	# does our 'selected upgrade' have a key that matches the upgrade parameter?
 	var has_upgrade = current_upgrades.has(upgrade.id)
@@ -38,7 +39,8 @@ func apply_upgrade(upgrade: AbilityUpgrade):
 	# we will increment that selected upgrade by one
 	else: 
 		current_upgrades[upgrade.id]["quantity"] += 1
-	print(current_upgrades)	
+	
+	GameEvents.emit_ability_upgrades_added(upgrade, current_upgrades)
 
 
 func on_upgrade_selected(upgrade: AbilityUpgrade): 
