@@ -2,6 +2,7 @@ extends Node
 
 @export var upgrade_pool: Array[AbilityUpgrade]
 @export var experience_manager: Node
+@export var upgrade_screen_scene: PackedScene
 
 var current_upgrades = {}
 
@@ -14,21 +15,25 @@ func on_level_up(current_level: int):
 	var chosen_upgrade = upgrade_pool.pick_random() as AbilityUpgrade
 	if chosen_upgrade == null:
 		return
-		
-	# does our 'current upgrade' have a key that matches chosen upgrade
-	var has_upgrade = current_upgrades.has(chosen_upgrade.id)
-	# if our 'current upgrade' doesn't have key that matches chosen upgrade...
+	
+	var upgrade_screen_instance = upgrade_screen_scene.instantiate()
+	add_child(upgrade_screen_instance)
+	upgrade_screen_instance.set_ability_upgrades([chosen_upgrade] as Array[AbilityUpgrade])
+
+
+func apply_upgrade(upgrade: AbilityUpgrade):
+	# does our 'selected upgrade' have a key that matches the upgrade parameter?
+	var has_upgrade = current_upgrades.has(upgrade.id)
+	# if our 'selected upgrade' doesn't have key that matches upgrade...
 	# we are going to create a new object at the key (i.e. sword_rate) 
 	if !has_upgrade:
-		current_upgrades[chosen_upgrade.id] = {
+		current_upgrades[upgrade.id] = {
 			# store reference to the resource
 			# pass in our chosen upgrade at resource key 
-			"resource": chosen_upgrade, 
+			"resource": upgrade, 
 			"quantity": 1
 		}
-	# if our 'current upgrade' already exists in dictionary...
+	# if our 'selected upgrade' already exists in dictionary...
 	# we will increment that selected upgrade by one
 	else: 
-		current_upgrades[chosen_upgrade.id]["quantity"] += 1
-	
-	print(current_upgrades)
+		current_upgrades[upgrade.id]["quantity"] += 1
