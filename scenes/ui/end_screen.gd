@@ -7,6 +7,11 @@ func _ready():
 	%QuitButton.pressed.connect(on_quit_button_pressed)
 
 
+func set_defeat():
+	%TitleLabel.text = "Defeated..."
+	%DescriptionLabel.text = "You faint. You lose."
+
+
 
 func on_restart_button_pressed():
 	get_tree().paused = false

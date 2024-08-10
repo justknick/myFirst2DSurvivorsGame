@@ -42,7 +42,7 @@ func check_deal_damage():
 		return
 	health_component.damage(1)
 	$DamageIntervalTimer.start()
-	print(health_component.current_health)
+	#print(health_component.current_health)
 
 
 func update_health_display():
