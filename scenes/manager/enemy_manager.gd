@@ -16,6 +16,33 @@ func _ready():
 	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
 
 
+func get_spawn_position():
+	var player = get_tree().get_first_node_in_group("player") as Node2D
+	if player == null:
+		return Vector2.ZERO
+	
+	var spawn_position = Vector2.ZERO
+	# need to declare enemy spawn distance from 0 to 2 tau 
+	# RIGHT means the RIGHT direction, aka 0 degrees or 0 radians 
+	# rand range will rotate location randomly between 0 and 2 pi (or 360 degrees) 
+	var random_direction = Vector2.RIGHT.rotated(randf_range(0, TAU))
+	
+	# perform check for physical boundaries, in a for loop
+	for i in 4:
+		# need to declare spawn position - in any circular direction 'spawn rad' away 
+		spawn_position = player.global_position + (random_direction * SPAWN_RADIUS)
+		
+		var query_parameters = PhysicsRayQueryParameters2D.create(player.global_position, spawn_position, 1)
+		var result = get_tree().root.world_2d.direct_space_state.intersect_ray(query_parameters)
+		if result.is_empty():
+			# we are clear - no collision
+			break
+		else:
+			random_direction = random_direction.rotated(deg_to_rad(90))
+	
+	return spawn_position
+
+
 # func for enemy spawn rate 
 func on_timer_timeout():
 	# restart timer, update wait timer on next timeout signal
@@ -28,20 +55,13 @@ func on_timer_timeout():
 	if player == null:
 		return 
 	
-	# need to declare spawn distance from 0 to 2 tau 
-	# RIGHT means the RIGHT direction, aka 0 degrees or 0 radians 
-	# rand range will rotate location randomly between 0 and 2 pi (or 360 degrees) 
-	var random_direction = Vector2.RIGHT.rotated(randf_range(0, TAU))
-	# need to declare spawn position - in any circular direction 'spawn rad' away 
-	var spawn_position = player.global_position + (random_direction * SPAWN_RADIUS)
-	
 	# declare enemy to instantiate - this creates node, but doesn't put in scene tree
 	var enemy = basic_enemy_scene.instantiate() as Node2D
 	
 	# now we'll place enemy node into scene tree, under entities layer
 	var entities_layer = get_tree().get_first_node_in_group("entities_layer")
 	entities_layer.add_child(enemy)
-	enemy.global_position = spawn_position 
+	enemy.global_position = get_spawn_position()
 
 
 func on_arena_difficulty_increased(arena_difficulty: int):
