@@ -32,5 +32,3 @@ func on_timer_timeout():
 	axe_instance.hitbox_component.damage = damage
 
 
-
-
