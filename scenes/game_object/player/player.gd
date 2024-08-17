@@ -33,6 +33,8 @@ func _process(delta):
 	move_and_slide()
 	
 	get_animation(movement_vector)
+	
+	get_facing_direction(movement_vector)
 
 
 func get_movement_vector():
@@ -60,11 +62,11 @@ func get_animation(movement_vector):
 		animation_player.play("walk")
 	else:
 		animation_player.play("RESET")
-	
+
+
+func get_facing_direction(movement_vector):
 	var move_sign = sign(movement_vector.x)
-	if move_sign == 0:
-		visuals.scale = Vector2.ONE
-	else:
+	if move_sign != 0:
 		visuals.scale = Vector2(move_sign, 1)
 
 
