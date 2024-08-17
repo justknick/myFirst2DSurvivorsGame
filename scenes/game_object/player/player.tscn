@@ -1,9 +1,95 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnyav4amnb3hf"]
+[gd_scene load_steps=13 format=3 uid="uid://bnyav4amnb3hf"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_ie07k"]
 [ext_resource type="Texture2D" uid="uid://dl25bv5woat31" path="res://scenes/game_object/player/player.png" id="1_ugtq6"]
 [ext_resource type="PackedScene" uid="uid://csyvyf58alty1" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_a5t6c"]
 [ext_resource type="PackedScene" uid="uid://gc25qcj5kcxu" path="res://scenes/component/health_component.tscn" id="2_m28nw"]
+
+[sub_resource type="Animation" id="Animation_aqsyn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ek6jv"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5), Vector2(2.84217e-14, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.20944, 0.20944, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"transitions": PackedFloat32Array(0.707107, 2.63902, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1.2), Vector2(1.5, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_71ixg"]
+_data = {
+"RESET": SubResource("Animation_aqsyn"),
+"walk": SubResource("Animation_ek6jv")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvri8"]
 bg_color = Color(0.247059, 0.14902, 0.192157, 1)
@@ -30,6 +116,11 @@ collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_ie07k")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_71ixg")
+}
+
 [node name="HealthComponent" parent="." instance=ExtResource("2_m28nw")]
 
 [node name="Abilities" type="Node" parent="."]
@@ -43,9 +134,9 @@ one_shot = true
 [node name="HealthBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(32, 4)
 offset_left = -16.0
-offset_top = -24.0
+offset_top = -29.0
 offset_right = 16.0
-offset_bottom = -20.0
+offset_bottom = -25.0
 pivot_offset = Vector2(16, 2)
 theme_override_styles/background = SubResource("StyleBoxFlat_qvri8")
 theme_override_styles/fill = SubResource("StyleBoxFlat_7cejy")
@@ -62,7 +153,9 @@ collision_mask = 0
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_mrmwx")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("1_ugtq6")
 offset = Vector2(0, -8)
 
