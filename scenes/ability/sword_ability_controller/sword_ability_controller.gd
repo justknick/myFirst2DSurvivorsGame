@@ -7,7 +7,8 @@ const MAX_RANGE = 150
 # Tells the type of variable that's being exported in the inspector
 @export var sword_ability: PackedScene
 
-var damage = 5
+var base_damage = 5
+var additional_damage_percent = 1
 var base_wait_time
 
 # Called when the node enters the scene tree for the first time.
@@ -47,7 +48,7 @@ func on_timer_timeout():
 	# we will add sword to the foreground_layer
 	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer")
 	foreground_layer.add_child(sword_instance)
-	sword_instance.hitbox_component.damage = damage
+	sword_instance.hitbox_component.damage = base_damage * additional_damage_percent
 	
 	sword_instance.global_position = enemies[0].global_position
 	sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4
@@ -59,11 +60,11 @@ func on_timer_timeout():
 
 # this will listen to all ability upgrades
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
-	# will ignore upgrades that are not "sword_rate"
-	if upgrade.id != "sword_rate":
-		return 
-	
-	# when upgrades is "sword_rate", calculate new sword_rate
-	var percent_reduction = current_upgrades["sword_rate"]["quantity"] * .1
-	$Timer.wait_time = base_wait_time * (1 - percent_reduction)
-	$Timer.start()
+	if upgrade.id == "sword_rate":
+		# when upgrades is "sword_rate", calculate new sword_rate
+		var percent_reduction = current_upgrades["sword_rate"]["quantity"] * .1
+		$Timer.wait_time = base_wait_time * (1 - percent_reduction)
+		$Timer.start()
+	elif upgrade.id == "sword_damage":
+		# when upgrades is "sword_damage", calculate new sword_damage
+		additional_damage_percent = 1 + (current_upgrades["sword_damage"]["quantity"] * .15)

@@ -1,13 +1,24 @@
 extends Node
 
-@export var upgrade_pool: Array[AbilityUpgrade]
+#@export var upgrade_pool: Array[AbilityUpgrade]
 @export var experience_manager: Node
 @export var upgrade_screen_scene: PackedScene
 
 var current_upgrades = {}
+var upgrade_pool: WeightedTable = WeightedTable.new()
+
+var upgrade_axe = preload("res://resources/upgrades/axe.tres")
+var upgrade_axe_damage = preload("res://resources/upgrades/axe_damage.tres")
+var upgrade_sword_rate = preload("res://resources/upgrades/sword_rate.tres")
+var upgrade_sword_damage = preload("res://resources/upgrades/sword_damage.tres")
 
 
 func _ready():
+	# add starting upgrades
+	upgrade_pool.add_item(upgrade_axe, 10)
+	upgrade_pool.add_item(upgrade_sword_rate, 10)
+	upgrade_pool.add_item(upgrade_sword_damage, 10)
+	
 	experience_manager.level_up.connect(on_level_up)
 
 
@@ -35,25 +46,36 @@ func apply_upgrade(upgrade: AbilityUpgrade):
 		var current_quantity = current_upgrades[upgrade.id]["quantity"]
 		#if quantity reaches max, remove it from upgrade_pool
 		if current_quantity == upgrade.max_quantity:
+			upgrade_pool.remove_item(upgrade)
 			# in the filter's func param, return true will keep upgrade.id element 
 			#  in list and return false will remove upgrade.id element from array list  
-			upgrade_pool = upgrade_pool.filter(func (upgrade_pool): return upgrade_pool.id != upgrade.id)
+#			upgrade_pool = upgrade_pool.filter(func (upgrade_pool): return upgrade_pool.id != upgrade.id)
 	
+	update_upgrade_pool(upgrade)
 	GameEvents.emit_ability_upgrades_added(upgrade, current_upgrades)
+	print("Selected Upgrade: ", upgrade)
+
+
+func update_upgrade_pool(chosen_upgrade: AbilityUpgrade):
+	# once ax upgrade is chosen, add axe_damage upgrade to the pool
+	if chosen_upgrade.id == upgrade_axe.id:
+		upgrade_pool.add_item(upgrade_axe_damage, 10)
 
 
 func pick_upgrades():
 	# to keep track of chosen upgrades
 	var chosen_upgrades: Array[AbilityUpgrade] = []
 	# make a copy of upgrade_pool array and use as reference 
-	var filtered_upgrades = upgrade_pool.duplicate()
+#	var filtered_upgrades = upgrade_pool.duplicate()
 	
 	for i in 2:
 		# check to break if there's a null option 
-		if filtered_upgrades.size() == 0:
+		if upgrade_pool.items.size() == chosen_upgrades.size():
 			break
 		
-		var chosen_upgrade = filtered_upgrades.pick_random() as AbilityUpgrade
+#		var chosen_upgrade = filtered_upgrades.pick_random() as AbilityUpgrade
+		# chosen_upgrade will be filtered 
+		var chosen_upgrade = upgrade_pool.pick_item(chosen_upgrades)
 		
 		# add each upgrade that we choose here
 		chosen_upgrades.append(chosen_upgrade)
@@ -62,7 +84,7 @@ func pick_upgrades():
 		#  filtered_upgrades array. Run the func in the parameter
 		#  if in the func it returns true, the element stays in the array, 
 		#  and if the func returns false, that element is filtered out 
-		filtered_upgrades = filtered_upgrades.filter(func (upgrade): return upgrade.id != chosen_upgrade.id) 
+#		filtered_upgrades = filtered_upgrades.filter(func (upgrade): return upgrade.id != chosen_upgrade.id) 
 		
 	return chosen_upgrades
 
@@ -77,5 +99,3 @@ func on_level_up(current_level: int):
 	var chosen_upgrades = pick_upgrades()
 	upgrade_screen_instance.set_ability_upgrades(chosen_upgrades as Array[AbilityUpgrade])
 	upgrade_screen_instance.upgrade_selected.connect(on_upgrade_selected)
-
-

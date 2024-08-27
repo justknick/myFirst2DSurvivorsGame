@@ -77,7 +77,7 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 	# give time_reduce a limit - do not go smaller than 0.7
 	time_reduce = min(time_reduce, .7)
 	
-	print(time_reduce)
+	print("Time Reduced: ", time_reduce)
 	timer.wait_time = base_spawn_time - time_reduce
 	
 	if arena_difficulty == 6: 
