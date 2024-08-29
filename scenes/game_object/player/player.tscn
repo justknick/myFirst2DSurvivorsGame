@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnyav4amnb3hf"]
+[gd_scene load_steps=12 format=3 uid="uid://bnyav4amnb3hf"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_ie07k"]
 [ext_resource type="Texture2D" uid="uid://dl25bv5woat31" path="res://scenes/game_object/player/player.png" id="1_ugtq6"]
@@ -91,15 +91,12 @@ _data = {
 "walk": SubResource("Animation_ek6jv")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvri8"]
-bg_color = Color(0.247059, 0.14902, 0.192157, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cejy"]
 bg_color = Color(0.262745, 0.882353, 0.701961, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0.247059, 0.14902, 0.192157, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mrmwx"]
@@ -132,13 +129,12 @@ wait_time = 0.5
 one_shot = true
 
 [node name="HealthBar" type="ProgressBar" parent="."]
-custom_minimum_size = Vector2(32, 4)
+custom_minimum_size = Vector2(32, 6)
 offset_left = -16.0
 offset_top = -29.0
 offset_right = 16.0
 offset_bottom = -25.0
-pivot_offset = Vector2(16, 2)
-theme_override_styles/background = SubResource("StyleBoxFlat_qvri8")
+pivot_offset = Vector2(16, 3)
 theme_override_styles/fill = SubResource("StyleBoxFlat_7cejy")
 max_value = 1.0
 value = 0.5
