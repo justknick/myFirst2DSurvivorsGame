@@ -57,7 +57,7 @@ _data = {
 }
 
 [node name="BackgroundScreenAnimationPlayer" type="AnimationPlayer"]
-root_node = NodePath("../ColorRect")
+root_node = NodePath("ColorRect")
 autoplay = "in"
 libraries = {
 "": SubResource("AnimationLibrary_dg0dt")
