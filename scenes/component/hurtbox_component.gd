@@ -1,6 +1,8 @@
 extends Area2D
 class_name HurtboxComponent
 
+signal hit 
+
 @export var health_component: HealthComponent
 
 # generally want to avoid hardcoding resources, but also don't want to clutter properties
@@ -33,3 +35,5 @@ func on_area_entered(other_area: Area2D):
 		format_string = "%0.0f"
 	# otherwise, display damage in one decimal place
 	floating_text.start(format_string % hitbox_component.damage)
+	
+	hit.emit()

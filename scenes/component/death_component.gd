@@ -15,7 +15,6 @@ func on_fainted():
 	# get enemy spawn position
 	var spawn_position = owner.global_position 
 	
-	
 	# get layer reference of entities in tree 
 	var entities = get_tree().get_first_node_in_group("entities_layer")
 	# move self to the entities layer 
@@ -28,3 +27,5 @@ func on_fainted():
 	# play animation
 	$AnimationPlayer.play("default")
 	
+	# play hit audio
+	$RandomHitAudioStreamPlayer2DHit.play_random()

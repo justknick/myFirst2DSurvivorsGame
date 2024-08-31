@@ -2,6 +2,11 @@ extends CharacterBody2D
 
 @onready var visuals = $Visuals
 @onready var velocity_component = $VelocityComponent
+@onready var hurt_box_component = $HurtBoxComponent
+
+
+func _ready():
+	hurt_box_component.hit.connect(on_hit)
 
 
 func _process(delta):
@@ -19,3 +24,7 @@ func _process(delta):
 #	if player_node != null:
 #		return (player_node.global_position - global_position).normalized()
 #	return Vector2.ZERO
+
+
+func on_hit():
+	$RandomHitAudioStreamPlayer2DHit.play_random()
