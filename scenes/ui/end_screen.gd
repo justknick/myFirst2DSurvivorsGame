@@ -23,10 +23,17 @@ func _ready():
 func set_defeat():
 	%TitleLabel.text = "Defeated..."
 	%DescriptionLabel.text = "You faint. You lose."
+	play_jingle(true)
+
+
+func play_jingle(defeat: bool = false):
+	if defeat:
+		$DefeatAudioStreamPlayerComponent.play()
+	else:
+		$VictoryAudioStreamPlayerComponent.play()
 
 
 func on_restart_button_pressed():
-	
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
 

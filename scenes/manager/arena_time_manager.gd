@@ -31,3 +31,5 @@ func  get_time_elapse():
 func on_timer_timeout():
 	var end_screen_instance = end_screen_scene.instantiate()
 	add_child(end_screen_instance)
+	# when timer ends, win == play victory jingle
+	end_screen_instance.play_jingle()

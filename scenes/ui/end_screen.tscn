@@ -1,14 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://tutrw7d55ivk"]
+[gd_scene load_steps=7 format=3 uid="uid://tutrw7d55ivk"]
 
 [ext_resource type="Script" path="res://scenes/ui/end_screen.gd" id="1_k1hpq"]
 [ext_resource type="PackedScene" uid="uid://c82aj0ne4mk2h" path="res://scenes/ui/background_screen_animation_player.tscn" id="2_ue8jj"]
+[ext_resource type="PackedScene" uid="uid://cyw62i70v77ky" path="res://scenes/component/random_audio_stream_player_component.tscn" id="3_uw1gf"]
 [ext_resource type="PackedScene" uid="uid://dgbm06g85i5gl" path="res://scenes/ui/sound_button.tscn" id="3_ycuik"]
+[ext_resource type="AudioStream" uid="uid://dmnqgqyb0agal" path="res://assets/audio/jingle/jingles_victory.ogg" id="4_mot32"]
+[ext_resource type="AudioStream" uid="uid://c4nl7gli44ame" path="res://assets/audio/jingle/jingles_defeat.ogg" id="5_8kjor"]
 
 [node name="EndScreen" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_k1hpq")
 
 [node name="BackgroundScreenAnimationPlayer" parent="." instance=ExtResource("2_ue8jj")]
+root_node = NodePath("../ColorRect2")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.607843, 0.298039, 0.639216, 0.352941)
+
+[node name="VictoryAudioStreamPlayerComponent" parent="." instance=ExtResource("3_uw1gf")]
+stream = ExtResource("4_mot32")
+
+[node name="DefeatAudioStreamPlayerComponent" parent="." instance=ExtResource("3_uw1gf")]
+stream = ExtResource("5_8kjor")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
