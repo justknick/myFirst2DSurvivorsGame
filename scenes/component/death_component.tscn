@@ -1,13 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://b72dgbiycmhim"]
+[gd_scene load_steps=15 format=3 uid="uid://d1daf2xgbke5p"]
 
 [ext_resource type="Script" path="res://scenes/component/death_component.gd" id="1_0swnd"]
 [ext_resource type="Texture2D" uid="uid://138ki7nr65ho" path="res://scenes/game_object/basic_enemy/basic_enemy.png" id="1_1sajd"]
-[ext_resource type="PackedScene" uid="uid://df4t86gyonu8r" path="res://scenes/component/random_hit_audio_stream_player_2d_hit.tscn" id="3_fasdu"]
-[ext_resource type="AudioStream" uid="uid://bgeyvih8wdowg" path="res://assets/audio/footstep_carpet_000.ogg" id="4_0x0ou"]
-[ext_resource type="AudioStream" uid="uid://dv5ye8cjvlob5" path="res://assets/audio/footstep_carpet_001.ogg" id="5_7t6ld"]
-[ext_resource type="AudioStream" uid="uid://cxspeyobu85wy" path="res://assets/audio/footstep_carpet_002.ogg" id="6_es20d"]
-[ext_resource type="AudioStream" uid="uid://cu15pxfghk5yp" path="res://assets/audio/footstep_carpet_003.ogg" id="7_c04ij"]
-[ext_resource type="AudioStream" uid="uid://sn3rbjst6poi" path="res://assets/audio/footstep_carpet_004.ogg" id="8_lpt84"]
+[ext_resource type="PackedScene" uid="uid://lylwo0m455le" path="res://scenes/component/random_audio_stream_player_2d_hit.tscn" id="3_vnqlh"]
+[ext_resource type="AudioStream" uid="uid://bgeyvih8wdowg" path="res://assets/audio/hit/footstep_carpet_000.ogg" id="4_0x0ou"]
+[ext_resource type="AudioStream" uid="uid://dv5ye8cjvlob5" path="res://assets/audio/hit/footstep_carpet_001.ogg" id="5_7t6ld"]
+[ext_resource type="AudioStream" uid="uid://cxspeyobu85wy" path="res://assets/audio/hit/footstep_carpet_002.ogg" id="6_es20d"]
+[ext_resource type="AudioStream" uid="uid://cu15pxfghk5yp" path="res://assets/audio/hit/footstep_carpet_003.ogg" id="7_c04ij"]
+[ext_resource type="AudioStream" uid="uid://sn3rbjst6poi" path="res://assets/audio/hit/footstep_carpet_004.ogg" id="8_lpt84"]
 
 [sub_resource type="Animation" id="Animation_23t45"]
 length = 0.001
@@ -97,6 +97,5 @@ one_shot = true
 fixed_fps = 0
 interpolate = false
 
-[node name="RandomHitAudioStreamPlayer2DHit" parent="." instance=ExtResource("3_fasdu")]
-max_distance = 300.0
+[node name="RandomHitAudioStreamPlayer2D" parent="." instance=ExtResource("3_vnqlh")]
 streams = Array[AudioStream]([ExtResource("4_0x0ou"), ExtResource("5_7t6ld"), ExtResource("6_es20d"), ExtResource("7_c04ij"), ExtResource("8_lpt84")])

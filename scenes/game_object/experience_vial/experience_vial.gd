@@ -54,4 +54,6 @@ func on_area_entered(other_area: Area2D):
 	# tween 3
 	tween.tween_callback(collect)
 	
+	# play random vial sound 
+	$RandomVialAudioStreamPlayer2D.play_random()
 

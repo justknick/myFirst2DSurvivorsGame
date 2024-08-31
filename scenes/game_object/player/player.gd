@@ -88,6 +88,7 @@ func on_damage_interval_timer_timeout():
 func on_health_changed():
 	GameEvents.emit_player_damaged()
 	update_health_display()
+	$RandomDamageAudioStreamPlayer2DHit.play_random()
 
 
 func on_ability_upgrades_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):
@@ -97,4 +98,3 @@ func on_ability_upgrades_added(ability_upgrade: AbilityUpgrade, current_upgrades
 	elif ability_upgrade.id == "movement_speed_rate":
 		velocity_component.max_speed = base_speed + (base_speed * \
 		current_upgrades["movement_speed_rate"]["quantity"] * .15)
-	

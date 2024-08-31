@@ -28,4 +28,4 @@ func on_fainted():
 	$AnimationPlayer.play("default")
 	
 	# play hit audio
-	$RandomHitAudioStreamPlayer2DHit.play_random()
+	$RandomHitAudioStreamPlayer2D.play_random()

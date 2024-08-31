@@ -27,4 +27,4 @@ func set_is_moving(moving: bool):
 
 
 func on_hit():
-	$RandomHitAudioStreamPlayer2DHit.play_random()
+	$RandomHitAudioStreamPlayer2D.play_random()
