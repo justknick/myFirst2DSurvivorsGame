@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3syuld1jyua3"]
+[gd_scene load_steps=5 format=3 uid="uid://c3syuld1jyua3"]
 
 [ext_resource type="TileSet" uid="uid://bkdm2kbyp4dlb" path="res://resources/tileset.tres" id="1_25wav"]
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_n63ne"]
+[ext_resource type="PackedScene" uid="uid://bjbuv263blc8" path="res://scenes/ui/vignette.tscn" id="2_ojqp2"]
 [ext_resource type="PackedScene" uid="uid://dgbm06g85i5gl" path="res://scenes/ui/sound_button.tscn" id="2_shhdr"]
 
 [node name="MainMenu" type="CanvasLayer"]
@@ -31,14 +32,19 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
 theme_override_font_sizes/font_size = 32
 text = "2D Arena Survivors "
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
 
 [node name="PlayButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_shhdr")]
 unique_name_in_owner = true
@@ -54,3 +60,5 @@ text = "Options"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
+
+[node name="Vignette" parent="." instance=ExtResource("2_ojqp2")]
