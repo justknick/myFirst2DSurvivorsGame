@@ -23,6 +23,7 @@ buses/default_bus_layout="res://resources/default_bus_layout.tres"
 
 GameEvents="*res://scenes/autoload/game_events.tscn"
 BgmAudioStreamPlayer="*res://scenes/autoload/bgm_audio_stream_player.tscn"
+ScreenTransition="*res://scenes/autoload/screen_transition.tscn"
 
 [debug]
 

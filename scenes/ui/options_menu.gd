@@ -63,4 +63,8 @@ func on_window_button_pressed():
 
 # back button will return to previous screen
 func on_back_pressed():
+	# transition animation
+#	ScreenTransition.transition()
+#	await ScreenTransition.transition_halfway
+	
 	back_pressed.emit()
