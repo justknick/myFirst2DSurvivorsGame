@@ -33,3 +33,4 @@ func on_timer_timeout():
 	add_child(end_screen_instance)
 	# when timer ends, win == play victory jingle
 	end_screen_instance.play_jingle()
+	MetaProgression.save()
