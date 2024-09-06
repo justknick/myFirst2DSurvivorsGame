@@ -112,7 +112,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.8, 0.8, 0.8, 0)
 
-[node name="MetayUpgradeCard" type="PanelContainer" groups=["upgrade_card"]]
+[node name="MetayUpgradeCard" type="PanelContainer" groups=["meta_upgrade_card"]]
 custom_minimum_size = Vector2(170, 0)
 offset_right = 150.0
 offset_bottom = 180.0
@@ -171,6 +171,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_wc50k")
@@ -195,7 +196,8 @@ size_flags_vertical = 0
 mouse_filter = 2
 texture = ExtResource("13_g625j")
 
-[node name="ExperienceVialLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"BlueOutlineLabel"
 text = "50 / 200"
