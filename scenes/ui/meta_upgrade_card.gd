@@ -7,7 +7,7 @@ extends PanelContainer
 @onready var progress_label = %ProgressLabel
 @onready var count_label = %CountLabel
 
-var upgrade: MetaUpgrade
+var meta_upgrade: MetaUpgrade
 
 
 # if a player clicks on a card, then that card will be chosen 
@@ -19,7 +19,7 @@ func _ready():
 
 # when meta cards drawn, assign each card an upgrade info
 func set_meta_upgrade(upgrade: MetaUpgrade):
-	self.upgrade = upgrade
+	meta_upgrade = upgrade
 	name_label.text = upgrade.title
 	description_label.text = upgrade.description
 	update_progress()
@@ -29,11 +29,11 @@ func set_meta_upgrade(upgrade: MetaUpgrade):
 func update_progress():
 	# variable for the meta progression quantity
 	var current_quantity = 0
-	if MetaProgression.save_data["meta_upgrades"].has(upgrade.id):
-		current_quantity = MetaProgression.save_data["meta_upgrades"][upgrade.id]["quantity"]
+	if MetaProgression.save_data["meta_upgrades"].has(meta_upgrade.id):
+		current_quantity = MetaProgression.save_data["meta_upgrades"][meta_upgrade.id]["quantity"]
 	# variable for currency and percentage 
 	var currency = MetaProgression.save_data["meta_upgrade_currency"]
-	var percent = currency / upgrade.experience_cost
+	var percent = currency / meta_upgrade.experience_cost
 	# min = take which is smaller, percent or 1 
 	percent = min(percent, 1)
 	display_card_progress(currency, percent, current_quantity)
@@ -50,12 +50,12 @@ func display_card_progress(currency: int, percent: float, quantity: int):
 	disable_button(percent, quantity)
 	# display the percentage into the 'value' 
 	progress_bar.value = percent
-	progress_label.text = str(currency) + "/" + str(upgrade.experience_cost)
+	progress_label.text = str(currency) + "/" + str(meta_upgrade.experience_cost)
 	count_label.text = "x%d" % quantity
 
 
 func disable_button(percent: float, quantity: int):
-	var is_maxed = quantity >= upgrade.max_quantity
+	var is_maxed = quantity >= meta_upgrade.max_quantity
 	# if not enough experience cost, disable purchase button
 	purchase_button.disabled = percent < 1 || is_maxed
 	if is_maxed: 
@@ -72,10 +72,10 @@ func on_gui_input(event: InputEvent):
 
 # upon purchase, add to the meta ugprade list
 func on_purchase_pressed():
-	if upgrade == null:
+	if meta_upgrade == null:
 		return
-	MetaProgression.add_meta_upgrade(upgrade)
-	MetaProgression.save_data["meta_upgrade_currency"] -= upgrade.experience_cost
+	MetaProgression.add_meta_upgrade(meta_upgrade)
+	MetaProgression.save_data["meta_upgrade_currency"] -= meta_upgrade.experience_cost
 	MetaProgression.save()
 	get_tree().call_group("meta_upgrade_card", "update_progress")
 	select_card()
