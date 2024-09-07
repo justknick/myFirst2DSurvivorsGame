@@ -1,6 +1,6 @@
 extends Node
 
-@export_range(0, 1) var drop_percent: float = .5
+@export_range(0, 1) var base_drop_percent: float = .5
 @export var vial_scene: PackedScene
 @export var health_component: Node
 
@@ -10,9 +10,12 @@ func _ready():
 
 
 func on_fainted():
+	var adjusted_drop_percent = base_drop_percent
+	adjusted_drop_percent = check_meta_upgrade(adjusted_drop_percent)
+	
 	# on faint do the following: 
 	# check random number is not greater than drop percentage
-	if randf() > drop_percent:
+	if randf() > adjusted_drop_percent:
 		return
 	
 	# check if vial scene does not exist (or not defined)
@@ -20,6 +23,17 @@ func on_fainted():
 		return
 		
 	# want the vial spawn at the enemy's position 
+	vial_spawn()
+
+
+func check_meta_upgrade(adjusted_rate: float):
+	var experience_gain_count = MetaProgression.get_upgrade_count("experience_gain")
+	if experience_gain_count > 0:
+		adjusted_rate += .1
+	return adjusted_rate
+
+
+func vial_spawn():
 	# check if 'owner' is not a Node2D
 	if not owner is Node2D:
 		return

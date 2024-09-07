@@ -73,10 +73,10 @@ text = "You survived!"
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="RestartButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("3_ycuik")]
+[node name="ContinueButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("3_ycuik")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Restart"
+text = "Continue"
 
 [node name="QuitToTitleButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("3_ycuik")]
 unique_name_in_owner = true

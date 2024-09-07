@@ -3,6 +3,9 @@ extends CanvasLayer
 @onready var background_screen_player: AnimationPlayer = $BackgroundScreenAnimationPlayer
 @onready var panel_container = $%PanelContainer
 
+var path_main_menu: String = "res://scenes/ui/main_menu.tscn"
+var path_continue_to_meta_menu: String = "res://scenes/ui/meta_menu.tscn"
+
 
 func _ready():
 	# tween the panel and setup scale
@@ -13,7 +16,7 @@ func _ready():
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	# button commands
 	get_tree().paused = true
-	%RestartButton.pressed.connect(on_restart_button_pressed)
+	%ContinueButton.pressed.connect(on_continue_button_pressed)
 	%QuitToTitleButton.pressed.connect(on_quit_to_title_pressed)
 	# background animation
 	background_screen_player.play("out")
@@ -33,19 +36,13 @@ func play_jingle(defeat: bool = false):
 		$VictoryAudioStreamPlayerComponent.play()
 
 
-func on_restart_button_pressed():
-	# transition animation
-	ScreenTransition.transition()
+func on_continue_button_pressed():
+	ScreenTransition.transition_to_scene(path_continue_to_meta_menu)
 	await ScreenTransition.transition_halfway
-	
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
 
 
 func on_quit_to_title_pressed():
-	# transition animation
-	ScreenTransition.transition()
+	ScreenTransition.transition_to_scene(path_main_menu)
 	await ScreenTransition.transition_halfway
-	
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")

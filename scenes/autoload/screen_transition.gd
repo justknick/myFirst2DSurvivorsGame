@@ -11,6 +11,14 @@ func transition():
 	play_animation()
 
 
+func transition_to_scene(scene_path: String):
+	# returns to main menu
+	transition()
+	await transition_halfway
+	# change to destination scene
+	get_tree().change_scene_to_file(scene_path)
+
+
 func emit_transition_halfway():
 	if skip_emit:
 		skip_emit = false

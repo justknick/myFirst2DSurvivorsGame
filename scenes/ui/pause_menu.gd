@@ -4,6 +4,7 @@ extends CanvasLayer
 
 var is_closing
 var options_menu_scene = preload("res://scenes/ui/options_menu.tscn")
+var path_main_menu: String = "res://scenes/ui/main_menu.tscn"
 
 
 func _ready():
@@ -70,10 +71,6 @@ func on_options_closed(options_instance: Node):
 
 
 func on_quit_to_title_pressed():
-	# transition animation
-	ScreenTransition.transition()
-	await ScreenTransition.transition_halfway
-	
 	# release the pause state
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+	ScreenTransition.transition_to_scene(path_main_menu)

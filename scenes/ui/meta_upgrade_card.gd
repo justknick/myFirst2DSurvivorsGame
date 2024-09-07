@@ -5,6 +5,7 @@ extends PanelContainer
 @onready var progress_bar = $%ProgressBar
 @onready var purchase_button = $%PurchaseButton
 @onready var progress_label = %ProgressLabel
+@onready var count_label = %CountLabel
 
 var upgrade: MetaUpgrade
 
@@ -26,11 +27,16 @@ func set_meta_upgrade(upgrade: MetaUpgrade):
 
 # after purchase, want to update progress for the card 
 func update_progress():
+	# variable for the meta progression quantity
+	var current_quantity = 0
+	if MetaProgression.save_data["meta_upgrades"].has(upgrade.id):
+		current_quantity = MetaProgression.save_data["meta_upgrades"][upgrade.id]["quantity"]
+	# variable for currency and percentage 
 	var currency = MetaProgression.save_data["meta_upgrade_currency"]
 	var percent = currency / upgrade.experience_cost
 	# min = take which is smaller, percent or 1 
 	percent = min(percent, 1)
-	display_card_progress(currency, percent)
+	display_card_progress(currency, percent, current_quantity)
 
 
 # animation on clicked card
@@ -39,12 +45,23 @@ func select_card():
 
 
 # displays card progress to determine if card can be purchased
-func display_card_progress(currency: int, percent: float):
+func display_card_progress(currency: int, percent: float, quantity: int):
+	# if not enough experience cost, disable purchase button
+	disable_button(percent, quantity)
 	# display the percentage into the 'value' 
 	progress_bar.value = percent
+	progress_label.text = str(currency) + "/" + str(upgrade.experience_cost)
+	count_label.text = "x%d" % quantity
+
+
+func disable_button(percent: float, quantity: int):
+	var is_maxed = quantity >= upgrade.max_quantity
 	# if not enough experience cost, disable purchase button
-	purchase_button.disabled = percent < 1
-	progress_label.text = str(currency) + " / " + str(upgrade.experience_cost)
+	purchase_button.disabled = percent < 1 || is_maxed
+	if is_maxed: 
+		purchase_button.text = "Maxed"
+	
+
 
 
 # command to click on a card
