@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnyuor3wksakk"]
+
+[ext_resource type="Script" path="res://scenes/ability/anvil_ability_controller/avil_ability_controller.gd" id="1_bm733"]
+[ext_resource type="PackedScene" uid="uid://b7icx23l1s0y6" path="res://scenes/ability/anvil_ability/anvil_ability.tscn" id="2_d7vgi"]
+
+[node name="AvilAbilityController" type="Node"]
+script = ExtResource("1_bm733")
+anvil_ability_scene = ExtResource("2_d7vgi")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true

@@ -3,6 +3,7 @@ extends Node
 #@export var upgrade_pool: Array[AbilityUpgrade]
 @export var experience_manager: Node
 @export var upgrade_screen_scene: PackedScene
+#@export var enemy_manager: Node
 
 var current_upgrades = {}
 var upgrade_pool: WeightedTable = WeightedTable.new()
@@ -12,16 +13,19 @@ var upgrade_axe_damage = preload("res://resources/upgrades/axe_damage.tres")
 var upgrade_sword_rate = preload("res://resources/upgrades/sword_rate.tres")
 var upgrade_sword_damage = preload("res://resources/upgrades/sword_damage.tres")
 var upgrade_movement_speed = preload("res://resources/upgrades/movement_speed_rate.tres")
+var upgrade_anvil = preload("res://resources/upgrades/anvil.tres")
 
 
 func _ready():
 	# add starting upgrades
-	upgrade_pool.add_item(upgrade_axe, 15)
+	upgrade_pool.add_item(upgrade_axe, 13)
+	upgrade_pool.add_item(upgrade_anvil, 12)
 	upgrade_pool.add_item(upgrade_sword_rate, 10)
 	upgrade_pool.add_item(upgrade_sword_damage, 10)
 	upgrade_pool.add_item(upgrade_movement_speed, 5)
-	
 	experience_manager.level_up.connect(on_level_up)
+#	enemy_manager.checkpoint_for_anvil.connect(on_anvil_checkpoint)
+
 
 
 # keep track of upgrades and have refeerence to upgraddes
@@ -55,7 +59,7 @@ func apply_upgrade(upgrade: AbilityUpgrade):
 	
 	update_upgrade_pool(upgrade)
 	GameEvents.emit_ability_upgrades_added(upgrade, current_upgrades)
-	print("Selected Upgrade: ", upgrade)
+	print("Selected Upgrade: ", upgrade.id)
 
 
 func update_upgrade_pool(chosen_upgrade: AbilityUpgrade):
@@ -101,3 +105,11 @@ func on_level_up(current_level: int):
 	var chosen_upgrades = pick_upgrades()
 	upgrade_screen_instance.set_ability_upgrades(chosen_upgrades as Array[AbilityUpgrade])
 	upgrade_screen_instance.upgrade_selected.connect(on_upgrade_selected)
+
+
+#func on_anvil_checkpoint(arena_difficulty: int):
+##	arena_difficulty_increased.emit(arena_difficulty)
+#	if arena_difficulty == 24:
+#		upgrade_pool.add_item(upgrade_anvil, 15000)
+#		print("Anvil Checkpoint Recieved")
+

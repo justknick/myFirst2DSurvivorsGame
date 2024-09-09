@@ -1,5 +1,7 @@
 extends Node
 
+signal checkpoint_for_anvil(arena_difficulty: int)
+
 const SPAWN_RADIUS = 350
 
 @export var basic_enemy_scene: PackedScene
@@ -16,7 +18,7 @@ var enemy_table = WeightedTable.new()
 func _ready():
 	# add basic enemy to the enemy table 
 	enemy_table.add_item(basic_enemy_scene, 10)
-
+	# release enemy at end of timer
 	base_spawn_time = timer.wait_time
 	timer.timeout.connect(on_timer_timeout)
 	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
@@ -89,5 +91,9 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 		enemy_table.add_item(wizard_enemy_scene, 13)
 	# 1 min, 30 sec in, spawn bat
 	elif arena_difficulty == 18:
-			enemy_table.add_item(bat_enemy_scene, 8)
+		enemy_table.add_item(bat_enemy_scene, 8)
+	# 2 min in, add Anvil ability into pool
+	elif arena_difficulty == 24:
+#		checkpoint_for_anvil.emit(arena_difficulty)
+		print("Emit Anvil Checkpoint")
 
