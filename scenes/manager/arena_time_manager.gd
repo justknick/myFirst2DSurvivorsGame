@@ -1,6 +1,7 @@
 extends Node
 
 signal arena_difficulty_increased(arena_difficulty: int)
+signal health_regeneration_interval(interval: int)
 
 const DIFFICULTY_INTERVAL = 5
 
@@ -22,6 +23,7 @@ func _process(delta):
 	if timer.time_left <= next_time_target:
 		arena_difficulty += 1
 		arena_difficulty_increased.emit(arena_difficulty)
+		health_regeneration_interval.emit(arena_difficulty)
 
 
 func  get_time_elapse():
