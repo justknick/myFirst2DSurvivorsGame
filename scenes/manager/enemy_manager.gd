@@ -94,6 +94,6 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 		enemy_table.add_item(bat_enemy_scene, 8)
 	# 2 min in, add Anvil ability into pool
 	elif arena_difficulty == 24:
-#		checkpoint_for_anvil.emit(arena_difficulty)
-		print("Emit Anvil Checkpoint")
+		checkpoint_for_anvil.emit(arena_difficulty)
+
 

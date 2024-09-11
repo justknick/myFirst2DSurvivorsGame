@@ -3,7 +3,7 @@ extends Node
 #@export var upgrade_pool: Array[AbilityUpgrade]
 @export var experience_manager: Node
 @export var upgrade_screen_scene: PackedScene
-#@export var enemy_manager: Node
+@export var enemy_manager: Node
 
 var current_upgrades = {}
 var upgrade_pool: WeightedTable = WeightedTable.new()
@@ -20,12 +20,12 @@ var upgrade_anvil_count = preload("res://resources/upgrades/anvil_count.tres")
 func _ready():
 	# add starting upgrades
 	upgrade_pool.add_item(upgrade_axe, 13)
-	upgrade_pool.add_item(upgrade_anvil, 12)
+#	upgrade_pool.add_item(upgrade_anvil, 12)
 	upgrade_pool.add_item(upgrade_sword_rate, 10)
 	upgrade_pool.add_item(upgrade_sword_damage, 10)
 	upgrade_pool.add_item(upgrade_movement_speed, 5)
 	experience_manager.level_up.connect(on_level_up)
-#	enemy_manager.checkpoint_for_anvil.connect(on_anvil_checkpoint)
+	enemy_manager.checkpoint_for_anvil.connect(on_anvil_checkpoint)
 
 
 
@@ -68,7 +68,7 @@ func update_upgrade_pool(chosen_upgrade: AbilityUpgrade):
 	if chosen_upgrade.id == upgrade_axe.id:
 		upgrade_pool.add_item(upgrade_axe_damage, 10)
 	elif chosen_upgrade.id == upgrade_anvil.id:
-		upgrade_pool.add_item(upgrade_anvil_count, 12)
+		upgrade_pool.add_item(upgrade_anvil_count, 10)
 
 
 func pick_upgrades():
@@ -110,9 +110,8 @@ func on_level_up(current_level: int):
 	upgrade_screen_instance.upgrade_selected.connect(on_upgrade_selected)
 
 
-#func on_anvil_checkpoint(arena_difficulty: int):
-##	arena_difficulty_increased.emit(arena_difficulty)
-#	if arena_difficulty == 24:
-#		upgrade_pool.add_item(upgrade_anvil, 15000)
-#		print("Anvil Checkpoint Recieved")
+func on_anvil_checkpoint(arena_difficulty: int):
+#	arena_difficulty_increased.emit(arena_difficulty)
+	upgrade_pool.add_item(upgrade_anvil, 15)
+	print("Anvil Checkpoint Reached")
 
