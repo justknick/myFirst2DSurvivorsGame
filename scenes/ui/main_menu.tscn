@@ -66,5 +66,36 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
 
+[node name="CreditsMarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -161.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="CreditsMarginContainer"]
+layout_mode = 2
+theme_type_variation = &"AlternatePanelContainer"
+
+[node name="MarginContainer" type="MarginContainer" parent="CreditsMarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Label" type="Label" parent="CreditsMarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+text = "created by: knixelcreator"
+
 [node name="Vignette" parent="." instance=ExtResource("2_ojqp2")]
 layer = 2
