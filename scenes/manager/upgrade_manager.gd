@@ -23,7 +23,7 @@ func _ready():
 #	upgrade_pool.add_item(upgrade_anvil, 12)
 	upgrade_pool.add_item(upgrade_sword_rate, 10)
 	upgrade_pool.add_item(upgrade_sword_damage, 10)
-	upgrade_pool.add_item(upgrade_movement_speed, 5)
+	upgrade_pool.add_item(upgrade_movement_speed, 6)
 	experience_manager.level_up.connect(on_level_up)
 	enemy_manager.checkpoint_for_anvil.connect(on_anvil_checkpoint)
 
