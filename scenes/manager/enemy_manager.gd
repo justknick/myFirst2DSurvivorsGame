@@ -13,6 +13,7 @@ const SPAWN_RADIUS = 350
 
 var base_spawn_time = 0
 var enemy_table = WeightedTable.new()
+var number_to_spawn = 1
 
 
 func _ready():
@@ -65,15 +66,16 @@ func on_timer_timeout():
 	if player == null:
 		return 
 	
-	# pick an enemy from the table from ready function
-	var enemy_scene = enemy_table.pick_item()
-	# declare enemy to instantiate - this creates node, but doesn't put in scene tree
-	var enemy = enemy_scene.instantiate() as Node2D
-	
-	# now we'll place enemy node into scene tree, under entities layer
-	var entities_layer = get_tree().get_first_node_in_group("entities_layer")
-	entities_layer.add_child(enemy)
-	enemy.global_position = get_spawn_position()
+	for i in number_to_spawn:
+		# pick an enemy from the table from ready function
+		var enemy_scene = enemy_table.pick_item()
+		# declare enemy to instantiate - this creates node, but doesn't put in scene tree
+		var enemy = enemy_scene.instantiate() as Node2D
+		
+		# now we'll place enemy node into scene tree, under entities layer
+		var entities_layer = get_tree().get_first_node_in_group("entities_layer")
+		entities_layer.add_child(enemy)
+		enemy.global_position = get_spawn_position()
 
 
 func on_arena_difficulty_increased(arena_difficulty: int):
@@ -83,7 +85,7 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 	# give time_reduce a limit - do not go smaller than 0.7
 	time_reduce = min(time_reduce, .7)
 	
-	print("Time Reduced: ", time_reduce)
+#	print("Time Reduced: ", time_reduce)
 	timer.wait_time = base_spawn_time - time_reduce
 	
 	# 30 sec in, spawn wizard
@@ -95,5 +97,10 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 	# 2 min in, add Anvil ability into pool
 	elif arena_difficulty == 24:
 		checkpoint_for_anvil.emit(arena_difficulty)
+	
+	# every 45 sec, increase # of enemies to spawn
+	if (arena_difficulty % 9) == 0:
+		number_to_spawn += 1
+		print("spawn # increased!! ")
 
 

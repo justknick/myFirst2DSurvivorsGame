@@ -50,5 +50,4 @@ func on_timer_timeout():
 # this will listen to anvil ability upgrades
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
 	if upgrade.id == "anvil_count":
-		# when upgrades is "sword_rate", calculate new sword_rate
-		var anvil_count = current_upgrades["anvil_count"]["quantity"] 
+		anvil_count = current_upgrades["anvil_count"]["quantity"] 
